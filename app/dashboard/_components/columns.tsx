@@ -2,12 +2,22 @@
 
 import type { Access } from "@/lib/data"
 import { ColumnDef } from "@tanstack/react-table"
-import { ChevronRightCircle } from "lucide-react"
+import { ArrowUpDown, ChevronRightCircle } from "lucide-react"
 import ActiveCell from "./ActiveCell"
+import { Button } from "@/components/ui/button"
 
 export const columns: ColumnDef<Access>[] = [
   {
-    header: "Site",
+    header: ({ column }) => {
+      return (
+        <span
+          className="flex space-x-2 items-center cursor-pointer hover:text-foreground"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Site <ArrowUpDown className="ml-2 h-4 w-4" />
+        </span>
+      )
+    },
     accessorKey: "name",
     cell: ({ row }) => {
       return <span className="text-primary">{row.getValue("name")}</span>
