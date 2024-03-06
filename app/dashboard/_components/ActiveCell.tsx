@@ -11,7 +11,7 @@ const ActiveCell = ({ text }: { text: string }) => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <span className="cursor-pointer text-gray-400" onClick={() => action(text)}>
+          <span className="cursor-pointer text-gray-400 hover:underline" onClick={() => action(text)}>
             {text}
           </span>
         </TooltipTrigger>

@@ -41,7 +41,7 @@ export const columns: ColumnDef<Access>[] = [
     accessorKey: "link",
     cell: ({ row }) => {
       return (
-        <a href={`https://${row.getValue("link")}`} className="cursor-pointer text-primary" target="_blank">
+        <a href={`https://${row.getValue("link")}`} className="cursor-pointer text-primary/50 hover:text-primary" target="_blank">
           <ChevronRightCircle />
         </a>
       )
