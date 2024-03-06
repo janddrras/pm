@@ -1,4 +1,5 @@
-type Category = "work" | "personal" | "TV" | "other"
+export const CategoryOptions = ["work", "personal", "TV", "other"] as const
+type Category = (typeof CategoryOptions)[number]
 
 export type Access = {
   id: number

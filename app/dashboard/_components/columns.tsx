@@ -4,7 +4,6 @@ import type { Access } from "@/lib/data"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, ChevronRightCircle } from "lucide-react"
 import ActiveCell from "./ActiveCell"
-import { Button } from "@/components/ui/button"
 
 export const columns: ColumnDef<Access>[] = [
   {

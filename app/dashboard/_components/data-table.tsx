@@ -7,13 +7,19 @@ import {
   getPaginationRowModel,
   useReactTable,
   SortingState,
-  getSortedRowModel
+  getSortedRowModel,
+  getFilteredRowModel,
+  ColumnFiltersState
 } from "@tanstack/react-table"
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
 import { useState } from "react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
+import Link from "next/link"
+import { CategoryOptions } from "@/lib/data"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -22,6 +28,7 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data,
@@ -30,7 +37,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    state: { sorting }
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { sorting, columnFilters }
   })
 
   const pageNumber = table.getPageCount()
@@ -38,6 +47,39 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
   return (
     <div>
+      <div className="flex items-center py-4 justify-between">
+        <div className="flex items-center space-x-4 justify-between">
+          <Input
+            placeholder="Search site..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+            className="max-w-sm placeholder:text-foreground/30"
+          />
+          <Select
+            onValueChange={(fieldValue) =>
+              fieldValue === "all"
+                ? table.getColumn("category")?.setFilterValue(null)
+                : table.getColumn("category")?.setFilterValue(fieldValue)
+            }
+          >
+            <SelectTrigger className="w-64">
+              <SelectValue placeholder="Category" className="text-foreground/30" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              {CategoryOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <Link href="/dashboard/access/create" className={buttonVariants({ variant: "default" })}>
+          Add new password
+        </Link>
+      </div>
+
       <div className="rounded-[var(--radius)] border">
         <Table>
           <TableHeader className=" bg-card/50">
