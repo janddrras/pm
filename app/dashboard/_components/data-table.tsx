@@ -4,6 +4,7 @@ import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReact
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -17,6 +18,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel()
   })
+  const pageNumber = table.getPageCount()
+  const arr = new Array(pageNumber).fill(0)
 
   return (
     <div>
@@ -54,14 +57,36 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-8">
-        <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          Previous
-        </Button>
-        <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          Next
-        </Button>
-      </div>
+
+      {pageNumber > 1 && (
+        <div className="flex items-center justify-center space-x-4 py-8">
+          <Button variant="ghost" size="sm" onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
+            <ChevronsLeft />
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+            <ChevronLeft />
+          </Button>
+          <div>
+            {arr.map((_, index) => (
+              <Button
+                key={index}
+                variant="ghost"
+                size="sm"
+                onClick={() => table.setPageIndex(index)}
+                disabled={table.getState().pagination.pageIndex === index}
+              >
+                {index + 1}
+              </Button>
+            ))}
+          </div>
+          <Button variant="ghost" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+            <ChevronRight />
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => table.lastPage()} disabled={!table.getCanNextPage()}>
+            <ChevronsRight />
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

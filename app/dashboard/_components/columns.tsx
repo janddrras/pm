@@ -7,7 +7,7 @@ import ActiveCell from "./ActiveCell"
 
 export const columns: ColumnDef<Access>[] = [
   {
-    header: "Name",
+    header: "Site",
     accessorKey: "name",
     cell: ({ row }) => {
       return <span className="text-primary">{row.getValue("name")}</span>

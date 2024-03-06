@@ -3,8 +3,8 @@ import Link from "next/link"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-center font-semibold text-4xl tracking-wide text-primary pt-36">Welcome!</h1>
+    <main className="flex flex-col items-center justify-between space-y-20">
+      <h1 className="text-center font-semibold text-4xl tracking-wide text-primary pt-8">Welcome!</h1>
       <div className="flex flex-col space-y-6">
         <div className="flex space-x-4">
           <div className="w-6 border h-6 bg-background" />
