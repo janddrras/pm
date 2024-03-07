@@ -18,8 +18,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
-import Link from "next/link"
 import { CategoryOptions } from "@/lib/data"
+import NewForm from "./DataForm"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -39,7 +40,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: { sorting, columnFilters }
+    state: { sorting, columnFilters },
+    initialState: { columnVisibility: { id: false } }
   })
 
   const pageNumber = table.getPageCount()
@@ -75,9 +77,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             </SelectContent>
           </Select>
         </div>
-        <Link href="/dashboard/access/create" className={buttonVariants({ variant: "default" })}>
-          Add new password
-        </Link>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="default">New password</Button>
+          </DialogTrigger>
+          <NewForm />
+        </Dialog>
       </div>
 
       <div className="rounded-[var(--radius)] border">
