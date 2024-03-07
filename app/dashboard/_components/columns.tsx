@@ -1,6 +1,6 @@
 "use client"
 
-import type { Access } from "@/lib/data"
+import type { AccessData } from "@/lib/resolver"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, ChevronRightCircle, MoreHorizontal } from "lucide-react"
 import ActiveCell from "./ActiveCell"
@@ -30,7 +30,7 @@ const deleteRow = (id: number) => {
   console.log(`Deleting row with id: ${id}`)
 }
 
-export const columns: ColumnDef<Access>[] = [
+export const columns: ColumnDef<AccessData>[] = [
   {
     header: "ID",
     accessorKey: "id"
@@ -97,7 +97,7 @@ export const columns: ColumnDef<Access>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const formData: Access = {
+      const formData: AccessData = {
         id: row.getValue("id"),
         name: row.getValue("name"),
         username: row.getValue("username"),
@@ -136,7 +136,7 @@ export const columns: ColumnDef<Access>[] = [
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => deleteRow(formData.id)}>Continue</AlertDialogAction>
+                <AlertDialogAction onClick={() => deleteRow(formData.id!)}>Continue</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
             <DataForm rowData={formData} />
