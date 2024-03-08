@@ -2,7 +2,6 @@
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
@@ -12,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { EyeIcon } from "lucide-react"
 import { useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import PasswordGenerator from "./PasswordGenerator"
 
 interface NewFormProps {
   rowData?: AccessData
@@ -140,6 +140,7 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             )}
           />
           <Separator />
+          <PasswordGenerator />
           <DialogFooter>
             <Button type="submit" className="w-full">
               Save
