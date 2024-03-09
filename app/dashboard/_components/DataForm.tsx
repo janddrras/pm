@@ -4,9 +4,9 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFoot
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { AccessData, CategoryOptions } from "@/lib/resolver"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { EyeIcon } from "lucide-react"
 import { useState } from "react"
@@ -16,18 +16,6 @@ import PasswordGenerator from "./PasswordGenerator"
 interface NewFormProps {
   rowData?: AccessData
 }
-
-// interface InputFieldProps {
-//
-// }
-//
-// const InputField = ({  } : InputFieldProps) => {
-//   return (
-//     <div>
-//      DataForm
-//     </div>
-//   )
-// }
 
 const PasswordForm = ({ rowData }: NewFormProps) => {
   const form = useForm<AccessData>({
@@ -50,14 +38,14 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
         <DialogDescription>Click save when you are done.</DialogDescription>
       </DialogHeader>
       <Separator />
-      <Form {...form}>
+      <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
             name="name"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Site</FormLabel>
+                <FormLabel htmlFor="name">Site</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -69,7 +57,7 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel htmlFor="username">Username</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -81,7 +69,7 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel htmlFor="email">Email</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -93,7 +81,7 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category</FormLabel>
+                <FormLabel htmlFor="category">Category</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
@@ -116,9 +104,9 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Link</FormLabel>
+                <FormLabel htmlFor="link">Link</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} id="link" />
                 </FormControl>
               </FormItem>
             )}
@@ -128,7 +116,7 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             control={form.control}
             render={({ field }) => (
               <FormItem className="relative">
-                <FormLabel>Password</FormLabel>
+                <FormLabel htmlFor="password">Password</FormLabel>
                 <EyeIcon
                   className="absolute text-foreground/50 cursor-pointer right-2 top-1/2 transform -translate-y-1/4"
                   onClick={() => setHash(!hash)}
@@ -140,14 +128,13 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             )}
           />
           <Separator />
-          <PasswordGenerator />
-          <DialogFooter>
-            <Button type="submit" className="w-full">
-              Save
-            </Button>
-          </DialogFooter>
+          <Button type="submit" className="w-full">
+            Save
+          </Button>
         </form>
-      </Form>
+        <Separator />
+        <PasswordGenerator setHash={setHash} />
+      </FormProvider>
     </DialogContent>
   )
 }
