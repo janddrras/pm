@@ -1,16 +1,17 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { PasswordGeneratorParams } from "./resolver"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function passwordGenerator({ length = 12, numbers = true, symbols = true, uppercase = true }) {
+export function passwordGenerator({ length, numbers, symbols, uppercase }: PasswordGeneratorParams) {
   const SYMBOLS = "!@#$%^&*()_+"
 
-  const uppersLength = uppercase ? Math.ceil(length / 3) : 0
-  const numbersLength = numbers ? Math.ceil(length / 4) : 0
-  const symbolsLength = symbols ? Math.ceil(length / 6) : 0
+  const uppersLength = uppercase ? Math.floor(length / 4) : 0
+  const numbersLength = numbers ? Math.floor(length / 5) : 0
+  const symbolsLength = symbols ? Math.floor(length / 6) : 0
   const lowersLength = length - uppersLength - numbersLength - symbolsLength
 
   const l = new Array(lowersLength)
@@ -37,7 +38,5 @@ export function passwordGenerator({ length = 12, numbers = true, symbols = true,
     .map((a) => (a = Math.floor(a * 26) + 65))
     .map((a) => String.fromCharCode(a))
 
-  const password = [...l, ...n, ...s, ...u].sort(() => Math.random() - 0.5).join("")
-
-  return password
+  return [...l, ...n, ...s, ...u].sort(() => Math.random() - 0.5).join("")
 }
