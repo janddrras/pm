@@ -12,8 +12,8 @@ export default async function DemoPage() {
   const data = await getData()
 
   return (
-    <div className="container mx-auto py-10">
+    <main className="container mx-auto py-10 mt-28">
       <DataTable columns={columns} data={data} />
-    </div>
+    </main>
   )
 }
