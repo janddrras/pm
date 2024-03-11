@@ -7,8 +7,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { login } from "@/actions/login"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import AuthMessage from "./AuthMessage"
+import { register } from "@/actions/register"
 
 interface AuthFormProps {
   mode: "Log in" | "Sign up"
@@ -24,11 +25,38 @@ const AuthForm = ({ mode }: AuthFormProps) => {
   })
 
   const [isPending, startTransition] = useTransition()
+  const [message, setMessage] = useState<string | undefined>("")
+  const [messageType, setMessageType] = useState<"error" | "success">("success")
 
   const handleAuth = (values: AuthDataType) => {
-    startTransition(() => {
-      login(values)
-    })
+    if (mode === "Sign up") {
+      startTransition(() => {
+        register(values).then((res) => {
+          if (res.error) {
+            setMessage(res.error)
+            setMessageType("error")
+          }
+          if (res.success) {
+            setMessage(res.success)
+            setMessageType("success")
+          }
+        })
+      })
+    }
+    if (mode === "Log in") {
+      startTransition(() => {
+        login(values).then((res) => {
+          if (res.error) {
+            setMessage(res.error)
+            setMessageType("error")
+          }
+          if (res.success) {
+            setMessage(res.success)
+            setMessageType("success")
+          }
+        })
+      })
+    }
   }
 
   return (
@@ -66,7 +94,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
             )}
           />
         </div>
-        <AuthMessage message={"message"} type="success" />
+        <AuthMessage message={message} messageType={messageType} />
         <Button type="submit" className="w-full mt-4" disabled={isPending}>
           {mode}
         </Button>
