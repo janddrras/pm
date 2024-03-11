@@ -1,10 +1,10 @@
 import { columns } from "./_components/columns"
 import { DataTable } from "./_components/data-table"
-import type { AccessData } from "@/lib/resolver"
+import type { AccessDataType } from "@/lib/resolver"
 import MockData from "@/lib/MOCK_DATA.json"
 
-async function getData(): Promise<AccessData[]> {
-  const data = MockData as AccessData[]
+async function getData(): Promise<AccessDataType[]> {
+  const data = MockData as AccessDataType[]
   return data
 }
 

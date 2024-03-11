@@ -5,14 +5,14 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
-import { PasswordGeneratorParams } from "@/lib/resolver"
+import type { PasswordGeneratorParamsType } from "@/lib/resolver"
 import { useState } from "react"
 import { passwordGenerator } from "@/lib/utils"
 import { useFormContext } from "react-hook-form"
 import { toast } from "@/components/ui/use-toast"
 
 const PasswordGenerator = ({ setHash }: { setHash: (value: boolean) => void }) => {
-  const [params, setParams] = useState<PasswordGeneratorParams>({ length: 16, numbers: true, symbols: true, uppercase: true })
+  const [params, setParams] = useState<PasswordGeneratorParamsType>({ length: 16, numbers: true, symbols: true, uppercase: true })
   const [newPassword, setNewPassword] = useState<string>("")
   const { setValue } = useFormContext()
 

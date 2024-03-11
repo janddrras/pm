@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { AccessData, CategoryOptions } from "@/lib/resolver"
+import type { AccessDataType } from "@/lib/resolver"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { EyeIcon } from "lucide-react"
@@ -14,16 +15,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import PasswordGenerator from "./PasswordGenerator"
 
 interface NewFormProps {
-  rowData?: AccessData
+  rowData?: AccessDataType
 }
 
 const PasswordForm = ({ rowData }: NewFormProps) => {
-  const form = useForm<AccessData>({
+  const form = useForm<AccessDataType>({
     resolver: zodResolver(AccessData),
     defaultValues: rowData || { name: "", username: "", email: "janddrras@gmail.com", category: "other", link: "", password: "" }
   })
 
-  const handleSubmit = (values: AccessData) => {
+  const handleSubmit = (values: AccessDataType) => {
     console.log(values)
   }
 

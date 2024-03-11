@@ -1,6 +1,6 @@
 "use client"
 
-import type { AccessData } from "@/lib/resolver"
+import type { AccessDataType } from "@/lib/resolver"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, ChevronRightCircle, MoreHorizontal } from "lucide-react"
 import ActiveCell from "./ActiveCell"
@@ -30,7 +30,7 @@ const deleteRow = (id: number) => {
   console.log(`Deleting row with id: ${id}`)
 }
 
-export const columns: ColumnDef<AccessData>[] = [
+export const columns: ColumnDef<AccessDataType>[] = [
   {
     header: "ID",
     accessorKey: "id"
@@ -97,7 +97,7 @@ export const columns: ColumnDef<AccessData>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const formData: AccessData = {
+      const formData: AccessDataType = {
         id: row.getValue("id"),
         name: row.getValue("name"),
         username: row.getValue("username"),

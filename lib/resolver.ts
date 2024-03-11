@@ -21,6 +21,13 @@ export const PasswordGeneratorParams = z.object({
   uppercase: z.boolean()
 })
 
-export type PasswordGeneratorParams = z.infer<typeof PasswordGeneratorParams>
+export const AuthData = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(3, { message: "Must be min 3 characters" }).max(64)
+})
 
-export type AccessData = z.infer<typeof AccessData>
+export type AuthDataType = z.infer<typeof AuthData>
+
+export type PasswordGeneratorParamsType = z.infer<typeof PasswordGeneratorParams>
+
+export type AccessDataType = z.infer<typeof AccessData>
