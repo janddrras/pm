@@ -4,7 +4,7 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFoot
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { AccessData, CategoryOptions } from "@/lib/resolver"
 import type { AccessDataType } from "@/lib/resolver"
 import { FormProvider, useForm } from "react-hook-form"
@@ -50,6 +50,7 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -116,15 +117,18 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             name="password"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="relative">
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <EyeIcon
-                  className="absolute text-foreground/50 cursor-pointer right-2 top-1/2 transform -translate-y-1/4"
-                  onClick={() => setHash(!hash)}
-                />
-                <FormControl>
-                  <Input {...field} type={hash ? "password" : "text"} />
-                </FormControl>
+              <FormItem>
+                <div className="relative space-y-2">
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <EyeIcon
+                    className="absolute text-foreground/50 cursor-pointer right-2 top-1/2 transform -translate-y-1/4"
+                    onClick={() => setHash(!hash)}
+                  />
+                  <FormControl>
+                    <Input {...field} type={hash ? "password" : "text"} />
+                  </FormControl>
+                </div>
+                <FormMessage />
               </FormItem>
             )}
           />

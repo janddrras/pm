@@ -7,7 +7,7 @@ export const AccessData = z.object({
   id: z.number().optional(),
   name: z.string().min(3, { message: "Must be min 3 characters" }).max(50),
   username: z.string().optional(),
-  email: z.string().email("Invalid email"),
+  email: z.string().email({ message: "Invalid email" }),
   category: CategoryEnum,
   link: z.string(),
   password: z.string().min(3, { message: "Must be min 3 characters" }).max(64)
@@ -22,7 +22,7 @@ export const PasswordGeneratorParams = z.object({
 })
 
 export const AuthData = z.object({
-  email: z.string().email("Invalid email"),
+  email: z.string().email({ message: "Invalid email" }),
   password: z.string().min(3, { message: "Must be min 3 characters" }).max(64)
 })
 
