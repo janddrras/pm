@@ -78,6 +78,23 @@ const AuthForm = ({ mode }: AuthFormProps) => {
               </FormItem>
             )}
           />
+          {mode === "Sign up" ? (
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="" htmlFor="name">
+                    Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input id="name" placeholder="Your name" {...field} type="text" disabled={isPending} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : null}
           <FormField
             control={form.control}
             name="password"

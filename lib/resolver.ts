@@ -23,6 +23,7 @@ export const PasswordGeneratorParams = z.object({
 
 export const AuthData = z.object({
   email: z.string().email({ message: "Invalid email" }),
+  name: z.string().optional(),
   password: z.string().min(3, { message: "Must be min 3 characters" }).max(64)
 })
 
