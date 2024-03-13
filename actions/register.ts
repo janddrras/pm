@@ -1,8 +1,8 @@
 "use server"
 
 import { AuthData, AuthDataType } from "@/lib/resolver"
-import { decrypt, encrypt } from "@/lib/utils"
-import db from "@/lib/db"
+import { encrypt } from "@/lib/utils"
+import { createUser, getUserByEmail } from "@/lib/db-actions/user"
 
 export const register = async (values: AuthDataType) => {
   const validatedFields = AuthData.safeParse(values)
@@ -15,19 +15,13 @@ export const register = async (values: AuthDataType) => {
 
   const encryptedPassword = encrypt(password)
 
-  const user = await db.user.findUnique({ where: { email } })
+  const user = await getUserByEmail(email)
 
   if (user) {
     return { error: "User already exists" }
   }
 
-  await db.user.create({
-    data: {
-      email,
-      name,
-      password: encryptedPassword
-    }
-  })
+  await createUser({ email, name, password: encryptedPassword })
 
   return { success: "OK" }
 }
