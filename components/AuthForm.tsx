@@ -46,13 +46,15 @@ const AuthForm = ({ mode }: AuthFormProps) => {
     if (mode === "Log in") {
       startTransition(() => {
         login(values).then((res) => {
-          if (res.error) {
-            setMessage(res.error)
-            setMessageType("error")
-          }
-          if (res.success) {
-            setMessage(res.success)
-            setMessageType("success")
+          if (res) {
+            if (res.error) {
+              setMessage(res.error)
+              setMessageType("error")
+            }
+            if (res.success) {
+              setMessage(res.success)
+              setMessageType("success")
+            }
           }
         })
       })

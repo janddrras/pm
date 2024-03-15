@@ -28,11 +28,32 @@ model Account {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?      @unique
   password      String?
   emailVerified DateTime?
   image         String?
+  accessData    AccessData[]
   accounts      Account[]
+}
+
+enum Category {
+  work
+  personal
+  TV
+  social
+  other
+}
+
+model AccessData {
+  id       String   @id @default(cuid())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  name     String
+  username String?
+  email    String?
+  category Category
+  link     String
+  password String
 }

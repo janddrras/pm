@@ -30,6 +30,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   const table = useReactTable({
     data,
@@ -77,11 +78,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             </SelectContent>
           </Select>
         </div>
-        <Dialog>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button variant="default">New password</Button>
           </DialogTrigger>
-          <NewForm />
+          <NewForm closeDialog={setDialogOpen} />
         </Dialog>
       </div>
 
@@ -112,7 +113,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  Welcome! Start adding passwords.
                 </TableCell>
               </TableRow>
             )}

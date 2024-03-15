@@ -26,4 +26,5 @@ export const login = async (values: AuthDataType) => {
     }
     throw error
   }
+  return { success: "Logged in!" }
 }

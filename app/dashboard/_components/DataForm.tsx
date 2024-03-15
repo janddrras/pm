@@ -10,22 +10,34 @@ import type { AccessDataType } from "@/lib/resolver"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { EyeIcon } from "lucide-react"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState, useTransition } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import PasswordGenerator from "./PasswordGenerator"
+import { createNewPassword, fetchPasswords, updatePassword } from "@/actions/database-actions"
 
 interface NewFormProps {
   rowData?: AccessDataType
+  closeDialog: Dispatch<SetStateAction<boolean>>
 }
 
-const PasswordForm = ({ rowData }: NewFormProps) => {
+const PasswordForm = ({ rowData, closeDialog }: NewFormProps) => {
   const form = useForm<AccessDataType>({
     resolver: zodResolver(AccessData),
     defaultValues: rowData || { name: "", username: "", email: "janddrras@gmail.com", category: "other", link: "", password: "" }
   })
 
+  const [isPending, startTransition] = useTransition()
+
   const handleSubmit = (values: AccessDataType) => {
-    console.log(values)
+    if (values.id) {
+      updatePassword(values.id, values)
+      closeDialog(false)
+      return
+    }
+
+    createNewPassword(values)
+    fetchPasswords()
+    closeDialog(false)
   }
 
   const dialogTitle = rowData ? "Edit password" : "New password"
@@ -133,7 +145,7 @@ const PasswordForm = ({ rowData }: NewFormProps) => {
             )}
           />
           <Separator />
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={isPending}>
             Save
           </Button>
         </form>
