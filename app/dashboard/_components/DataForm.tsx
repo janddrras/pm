@@ -13,7 +13,7 @@ import { EyeIcon } from "lucide-react"
 import { Dispatch, SetStateAction, useState, useTransition } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import PasswordGenerator from "./PasswordGenerator"
-import { createNewPassword, fetchPasswords, updatePassword } from "@/actions/database-actions"
+import { createNewPassword, updatePassword } from "@/actions/database-actions"
 
 interface NewFormProps {
   rowData?: AccessDataType
@@ -29,15 +29,16 @@ const PasswordForm = ({ rowData, closeDialog }: NewFormProps) => {
   const [isPending, startTransition] = useTransition()
 
   const handleSubmit = (values: AccessDataType) => {
-    if (values.id) {
-      updatePassword(values.id, values)
-      closeDialog(false)
-      return
-    }
+    startTransition(() => {
+      if (values.id) {
+        updatePassword(values.id, values)
+        closeDialog(false)
+        return
+      }
 
-    createNewPassword(values)
-    fetchPasswords()
-    closeDialog(false)
+      createNewPassword(values)
+      closeDialog(false)
+    })
   }
 
   const dialogTitle = rowData ? "Edit password" : "New password"
