@@ -1,9 +1,10 @@
 "use server"
 
 import { auth } from "@/lib/auth"
-import { getAllPasswords, createPassword, deleteData, updateData, getPassword } from "@/lib/db-actions/access-data"
+import { getAllPasswords, createPassword, deleteData, updateData, getPassword } from "@/lib/db-actions/data"
 import { getUserByEmail } from "@/lib/db-actions/user"
 import { AccessDataType } from "@/lib/resolver"
+import { revalidatePath } from "next/cache"
 
 export const fetchPasswords = async () => {
   const user = await getUserFromAuth()
@@ -19,16 +20,19 @@ export const findOnePassword = async (id: string) => {
 export const createNewPassword = async (values: AccessDataType) => {
   const user = await getUserFromAuth()
   createPassword({ ...values, userId: user!.id })
+  revalidatePath("/dashboard")
   return { success: "OK" }
 }
 
 export const deletePassword = async (id: string) => {
   await deleteData(id)
+  revalidatePath("/dashboard")
   return { success: "OK" }
 }
 
 export const updatePassword = async (id: string, values: AccessDataType) => {
   const updatedPassword = await updateData(id, values)
+  revalidatePath("/dashboard")
   return updatedPassword
 }
 

@@ -1,6 +1,7 @@
 import db from "@/lib/db"
 
 import { AccessDataInputType, AccessDataType } from "../resolver"
+import { decrypt, encrypt } from "../utils"
 
 export const getAllPasswords = async (userId: string) => {
   try {
@@ -9,7 +10,10 @@ export const getAllPasswords = async (userId: string) => {
         userId
       }
     })
-    return passwords
+    return passwords.map((password) => ({
+      ...password,
+      password: decrypt(password.password)
+    }))
   } catch (error) {
     throw error
   }
@@ -17,12 +21,15 @@ export const getAllPasswords = async (userId: string) => {
 
 export const getPassword = async (id: string) => {
   try {
-    const password = await db.accessData.findUnique({
+    const data = await db.accessData.findUnique({
       where: {
         id
       }
     })
-    return password
+    if (!data) {
+      throw new Error("Password not found")
+    }
+    return { ...data, password: decrypt(data.password) }
   } catch (error) {
     throw error
   }
@@ -31,7 +38,7 @@ export const getPassword = async (id: string) => {
 export const createPassword = async (values: AccessDataInputType) => {
   try {
     const passwordData = await db.accessData.create({
-      data: { ...values }
+      data: { ...values, password: encrypt(values.password) }
     })
     return passwordData
   } catch (error) {
@@ -44,7 +51,8 @@ export const updateData = async (id: string, values: AccessDataType) => {
     const passwordData = await db.accessData.update({
       where: { id },
       data: {
-        ...values
+        ...values,
+        password: encrypt(values.password)
       }
     })
     return passwordData

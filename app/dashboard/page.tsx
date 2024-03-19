@@ -2,7 +2,7 @@ import { columns } from "./_components/columns"
 import { DataTable } from "./_components/data-table"
 import { fetchPasswords } from "@/actions/database-actions"
 
-export default async function DemoPage() {
+export default async function Dashboard() {
   const data = await fetchPasswords()
   if (!data) {
     return <div>Something went wrong</div>
@@ -11,7 +11,8 @@ export default async function DemoPage() {
   const formattedData = data.map((item) => ({
     ...item,
     username: item.username || undefined,
-    email: item.email || undefined
+    email: item.email || undefined,
+    password: item.password.toString()
   }))
 
   return (
