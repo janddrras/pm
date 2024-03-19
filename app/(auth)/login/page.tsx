@@ -1,4 +1,4 @@
-import AuthCard from "@/components/AuthCard"
+import AuthCard from "@/app/(auth)/_components/AuthCard"
 
 const Login = () => {
   return (

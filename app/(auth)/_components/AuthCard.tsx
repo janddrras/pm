@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 import AuthForm from "./AuthForm"
-import { Button } from "./ui/button"
+import { Button } from "../../../components/ui/button"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
 
