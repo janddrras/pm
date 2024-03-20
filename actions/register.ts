@@ -3,6 +3,7 @@
 import { AuthData, AuthDataType } from "@/lib/resolver"
 import { encrypt } from "@/lib/utils"
 import { createUser, getUserByEmail } from "@/lib/db-actions/user"
+import { generateVerificationToken } from "@/lib/tokens"
 
 export const register = async (values: AuthDataType) => {
   const validatedFields = AuthData.safeParse(values)
@@ -23,5 +24,7 @@ export const register = async (values: AuthDataType) => {
 
   await createUser({ email, name, password: encryptedPassword })
 
-  return { success: "OK" }
+  const verificationToken = await generateVerificationToken(email)
+
+  return { success: "Confirmation email sent" }
 }

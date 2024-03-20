@@ -1,17 +1,22 @@
 "use server"
 
 import { signIn } from "@/lib/auth"
+import { getUserByEmail } from "@/lib/db-actions/user"
 import { AuthData, AuthDataType } from "@/lib/resolver"
+import { generateVerificationToken } from "@/lib/tokens"
 import { AuthError } from "next-auth"
 
 export const login = async (values: AuthDataType) => {
   const validatedFields = AuthData.safeParse(values)
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields" }
-  }
+  if (!validatedFields.success) return { error: "Invalid fields" }
 
   const { email, password } = validatedFields.data
+  const existingUser = await getUserByEmail(email)
+  if (!existingUser || !existingUser.email || !existingUser.password) return { error: "Invalid credentials!" }
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(existingUser.email)
+    return { success: "Confirmation email sen" }
+  }
 
   try {
     await signIn("credentials", { email, password, redirectTo: "/dashboard" })

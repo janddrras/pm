@@ -6,7 +6,6 @@ import AuthForm from "./AuthForm"
 import { Button } from "../../../components/ui/button"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
-import { signIn } from "@/lib/auth"
 import { oauthLogin } from "@/actions/login"
 
 interface AuthCardProps {
@@ -22,14 +21,16 @@ const AuthCard = ({ mode }: AuthCardProps) => {
       </CardHeader>
       <CardContent>
         <AuthForm mode={mode} />
-        <div className="flex space-x-2 mt-4">
-          <Button variant="outline" className="w-full bg-card/45" onClick={() => oauthLogin("google")}>
-            <FcGoogle className="w-5 h-5" />
-          </Button>
-          <Button variant="outline" className="w-full  bg-card/45" onClick={() => oauthLogin("github")}>
-            <FaGithub className="w-5 h-5" />
-          </Button>
-        </div>
+        {mode === "Log in" && (
+          <div className="flex space-x-2 mt-4">
+            <Button variant="outline" className="w-full bg-card/45" onClick={() => oauthLogin("google")}>
+              <FcGoogle className="w-5 h-5" />
+            </Button>
+            <Button variant="outline" className="w-full  bg-card/45" onClick={() => oauthLogin("github")}>
+              <FaGithub className="w-5 h-5" />
+            </Button>
+          </div>
+        )}
         <div className="mt-4 text-sm text-foreground/60">
           <p>
             {mode === "Log in" ? "Don't have an account? " : "Already have an account? "}
