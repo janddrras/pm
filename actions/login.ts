@@ -28,3 +28,20 @@ export const login = async (values: AuthDataType) => {
   }
   return { success: "Logged in!" }
 }
+
+export const oauthLogin = async (provider: string) => {
+  try {
+    await signIn(provider, { callbackUrl: "/dashboard" })
+  } catch (error: any) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "OAuthSignInError":
+          return { error: "Invalid credentials!" }
+        default:
+          return { error: "Something went wrong!" }
+      }
+    }
+    throw error
+  }
+  return { success: "Logged in!" }
+}

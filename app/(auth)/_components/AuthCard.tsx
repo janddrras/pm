@@ -1,9 +1,13 @@
+"use client"
+
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 import AuthForm from "./AuthForm"
 import { Button } from "../../../components/ui/button"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
+import { signIn } from "@/lib/auth"
+import { oauthLogin } from "@/actions/login"
 
 interface AuthCardProps {
   mode: "Log in" | "Sign up"
@@ -19,10 +23,10 @@ const AuthCard = ({ mode }: AuthCardProps) => {
       <CardContent>
         <AuthForm mode={mode} />
         <div className="flex space-x-2 mt-4">
-          <Button variant="outline" className="w-full bg-card/45">
+          <Button variant="outline" className="w-full bg-card/45" onClick={() => oauthLogin("google")}>
             <FcGoogle className="w-5 h-5" />
           </Button>
-          <Button variant="outline" className="w-full  bg-card/45">
+          <Button variant="outline" className="w-full  bg-card/45" onClick={() => oauthLogin("github")}>
             <FaGithub className="w-5 h-5" />
           </Button>
         </div>
