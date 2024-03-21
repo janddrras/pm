@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import SimpleCripto from "simple-crypto-js"
-import { PasswordGeneratorParamsType } from "./resolver"
+import { PasswordGeneratorParamsType } from "./resolvers"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

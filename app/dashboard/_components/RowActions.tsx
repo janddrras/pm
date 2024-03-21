@@ -20,7 +20,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { MoreHorizontal } from "lucide-react"
 import DataForm from "./DataForm"
 import { deletePassword } from "@/actions/database-actions"
-import { AccessDataType } from "@/lib/resolver"
+import { AccessDataType } from "@/lib/resolvers"
 import { useState } from "react"
 
 const deleteRow = (id: string) => deletePassword(id)

@@ -1,6 +1,6 @@
 "use client"
 
-import { AuthData, AuthDataType } from "@/lib/resolver"
+import { AuthData, AuthDataType } from "@/lib/resolvers"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../components/ui/form"

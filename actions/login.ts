@@ -1,8 +1,8 @@
 "use server"
 
-import { signIn } from "@/lib/auth"
+import { signIn } from "@/auth"
 import { getUserByEmail } from "@/lib/db-actions/user"
-import { AuthData, AuthDataType } from "@/lib/resolver"
+import { AuthData, AuthDataType } from "@/lib/resolvers"
 import { generateVerificationToken } from "@/lib/tokens"
 import { AuthError } from "next-auth"
 

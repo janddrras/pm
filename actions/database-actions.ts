@@ -1,8 +1,8 @@
 "use server"
 
-import { auth } from "@/lib/auth"
+import { auth } from "@/auth"
 import { getAllPasswords, createPassword, deleteData, updateData, getPassword } from "@/lib/db-actions/data"
-import { AccessDataType } from "@/lib/resolver"
+import { AccessDataType } from "@/lib/resolvers"
 import { revalidatePath } from "next/cache"
 
 export const fetchPasswords = async () => {

@@ -1,5 +1,5 @@
-import db from "@/lib/db"
-import { AuthDataType } from "../resolver"
+import db from "@/db"
+import { AuthDataType } from "../resolvers"
 
 export const getUserByEmail = async (email: string) => {
   try {

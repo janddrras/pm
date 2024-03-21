@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "./ui/button"
-import { auth, signOut } from "@/lib/auth"
+import { auth, signOut } from "@/auth"
 
 const Header = async () => {
   const session = await auth()

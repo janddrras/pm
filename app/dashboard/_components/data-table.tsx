@@ -18,7 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
-import { CategoryOptions } from "@/lib/resolver"
+import { CategoryOptions } from "@/lib/resolvers"
 import NewForm from "./DataForm"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 

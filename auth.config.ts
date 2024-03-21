@@ -2,9 +2,9 @@ import Credentials from "next-auth/providers/credentials"
 import Github from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import type { NextAuthConfig } from "next-auth"
-import { AuthData } from "./resolver"
-import { getUserByEmail } from "./db-actions/user"
-import { decrypt } from "./utils"
+import { AuthData } from "./lib/resolvers"
+import { getUserByEmail } from "./lib/db-actions/user"
+import { decrypt } from "./lib/utils"
 
 export default {
   providers: [

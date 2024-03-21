@@ -1,6 +1,6 @@
 "use server"
 
-import { AuthData, AuthDataType } from "@/lib/resolver"
+import { AuthData, AuthDataType } from "@/lib/resolvers"
 import { encrypt } from "@/lib/utils"
 import { createUser, getUserByEmail } from "@/lib/db-actions/user"
 import { generateVerificationToken } from "@/lib/tokens"

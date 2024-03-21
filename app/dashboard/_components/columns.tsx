@@ -1,6 +1,6 @@
 "use client"
 
-import type { AccessDataType } from "@/lib/resolver"
+import type { AccessDataType } from "@/lib/resolvers"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, ChevronRightCircle } from "lucide-react"
 import ActiveCell from "./ActiveCell"

@@ -1,6 +1,6 @@
-import db from "@/lib/db"
+import db from "@/db"
 
-import { AccessDataInputType, AccessDataType } from "../resolver"
+import { AccessDataInputType, AccessDataType } from "../resolvers"
 import { decrypt, encrypt } from "../utils"
 
 export const getAllPasswords = async (userId: string) => {
