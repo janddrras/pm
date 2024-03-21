@@ -1,5 +1,6 @@
 import db from "@/db"
 import { AuthDataType } from "../resolvers"
+import { User } from "@prisma/client"
 
 export const getUserByEmail = async (email: string) => {
   try {
@@ -27,6 +28,18 @@ export const createUser = async ({ email, name, password }: AuthDataType) => {
         name,
         password
       }
+    })
+    return user
+  } catch {
+    return null
+  }
+}
+
+export const updateUser = async (id: string, data: User) => {
+  try {
+    const user = await db.user.update({
+      where: { id },
+      data
     })
     return user
   } catch {

@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth"
 import { getUserByEmail } from "@/lib/db-actions/user"
+import { sendVerificationEmail } from "@/lib/mail"
 import { AuthData, AuthDataType } from "@/lib/resolvers"
 import { generateVerificationToken } from "@/lib/tokens"
 import { AuthError } from "next-auth"
@@ -12,10 +13,13 @@ export const login = async (values: AuthDataType) => {
 
   const { email, password } = validatedFields.data
   const existingUser = await getUserByEmail(email)
+
   if (!existingUser || !existingUser.email || !existingUser.password) return { error: "Invalid credentials!" }
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(existingUser.email)
-    return { success: "Confirmation email sen" }
+    if (!verificationToken) return { error: "Something went wrong" }
+    await sendVerificationEmail(email, verificationToken.token)
+    return { success: "Confirmation email sent" }
   }
 
   try {
