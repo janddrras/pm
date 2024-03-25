@@ -38,6 +38,48 @@ export const deleteVerificationToken = async (id: string) => {
     await db.verificationToken.delete({ where: { id } })
     return true
   } catch {
-    return false
+    return null
+  }
+}
+
+export const getResetTokenByEmail = async (email: string) => {
+  try {
+    const resetToken = await db.resetToken.findFirst({ where: { email } })
+    return resetToken
+  } catch {
+    return null
+  }
+}
+
+export const getResetTokenByToken = async (token: string) => {
+  try {
+    const resetToken = await db.resetToken.findUnique({ where: { token } })
+    return resetToken
+  } catch {
+    return null
+  }
+}
+
+export const createResetToken = async (email: string, token: string, expires: Date) => {
+  try {
+    const resetToken = await db.resetToken.create({
+      data: {
+        email,
+        token,
+        expires
+      }
+    })
+    return resetToken
+  } catch {
+    return null
+  }
+}
+
+export const deleteResetToken = async (id: string) => {
+  try {
+    await db.resetToken.delete({ where: { id } })
+    return true
+  } catch {
+    return null
   }
 }

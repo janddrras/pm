@@ -1,65 +1,19 @@
 "use client"
 
-import { AuthData, AuthDataType } from "@/lib/resolvers"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../components/ui/form"
 import { Input } from "../../../components/ui/input"
-import { Button } from "../../../components/ui/button"
-import { login } from "@/actions/login"
-import { useState, useTransition } from "react"
+import { Button, buttonVariants } from "../../../components/ui/button"
 import AuthMessage from "./AuthMessage"
-import { register } from "@/actions/register"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
+import { useSubmitAuthForm } from "@/hooks/useSubmitAuthForm"
 
-interface AuthFormProps {
-  mode: "Log in" | "Sign up"
+export interface AuthFormProps {
+  mode: "Log in" | "Sign up" | "Reset password"
 }
 
 const AuthForm = ({ mode }: AuthFormProps) => {
-  const form = useForm<AuthDataType>({
-    resolver: zodResolver(AuthData),
-    defaultValues: {
-      email: "",
-      password: ""
-    }
-  })
-
-  const [isPending, startTransition] = useTransition()
-  const [message, setMessage] = useState<string | undefined>("")
-  const [messageType, setMessageType] = useState<"error" | "success">("success")
-
-  const handleAuth = (values: AuthDataType) => {
-    if (mode === "Sign up") {
-      startTransition(() => {
-        register(values).then((res) => {
-          if (res.error) {
-            setMessage(res.error)
-            setMessageType("error")
-          }
-          if (res.success) {
-            setMessage(res.success)
-            setMessageType("success")
-          }
-        })
-      })
-    }
-    if (mode === "Log in") {
-      startTransition(() => {
-        login(values).then((res) => {
-          if (res) {
-            if (res.error) {
-              setMessage(res.error)
-              setMessageType("error")
-            }
-            if (res.success) {
-              setMessage(res.success)
-              setMessageType("success")
-            }
-          }
-        })
-      })
-    }
-  }
+  const { form, isPending, handleAuth, message, messageType } = useSubmitAuthForm({ mode })
 
   return (
     <Form {...form}>
@@ -102,19 +56,34 @@ const AuthForm = ({ mode }: AuthFormProps) => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="" htmlFor="password">
+                <FormLabel className={mode === "Reset password" ? "hidden" : ""} htmlFor="password">
                   Password
                 </FormLabel>
                 <FormControl>
-                  <Input id="password" placeholder="Your password" {...field} type="password" disabled={isPending} />
+                  <Input
+                    className={mode === "Reset password" ? "hidden" : ""}
+                    id="password"
+                    placeholder="Your password"
+                    {...field}
+                    type="password"
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+        {mode === "Log in" && (
+          <div className="inline-flex items-center pt-2">
+            <p className="text-foreground/60 text-sm">Forgot your password?</p>
+            <Link className={cn(buttonVariants({ variant: "link" }))} href="/reset-password">
+              Click here!
+            </Link>
+          </div>
+        )}
         <AuthMessage message={message} messageType={messageType} />
-        <Button type="submit" className="w-full mt-4" disabled={isPending}>
+        <Button type="submit" className="w-full mt-8" disabled={isPending}>
           {mode}
         </Button>
       </form>

@@ -5,7 +5,7 @@ import { encrypt } from "@/lib/utils"
 import { createUser, getUserByEmail, updateUser } from "@/lib/db-actions/user"
 import { generateVerificationToken } from "@/lib/tokens"
 import { sendVerificationEmail } from "@/lib/mail"
-import { deleteVerificationToken, getVerificationTokenByToken } from "@/lib/db-actions/verification-token"
+import { deleteVerificationToken, getVerificationTokenByToken } from "@/lib/db-actions/token"
 import { signIn } from "@/auth"
 import { AuthError } from "next-auth"
 

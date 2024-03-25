@@ -15,3 +15,15 @@ export const sendVerificationEmail = async (email: string, token: string, name =
     // react: EmailTemplate({ name, verificationLink }) as React.ReactElement
   })
 }
+
+export const sendResetPasswordEmail = async (email: string, token: string) => {
+  const resetLink = `${process.env.NEXT_PUBLIC_RESET_URL}?token=${token}`
+
+  await resend.emails.send({
+    from: "Coffeeandcream <office@coffeeandcream.net>",
+    to: email,
+    subject: "Reset password to Private Password Manager!",
+    text: `You can reset your password by clicking the link: ${resetLink}`
+    // react: EmailTemplate({ name, verificationLink }) as React.ReactElement
+  })
+}

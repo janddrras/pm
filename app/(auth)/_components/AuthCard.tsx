@@ -2,17 +2,19 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import Link from "next/link"
-import AuthForm from "./AuthForm"
+import AuthForm, { AuthFormProps } from "./AuthForm"
 import { Button } from "../../../components/ui/button"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
 import { oauthLogin } from "@/actions/login"
 
-interface AuthCardProps {
-  mode: "Log in" | "Sign up"
-}
+const AuthCard = ({ mode }: AuthFormProps) => {
+  const footerText = {
+    "Log in": "Don't have an account?",
+    "Sign up": "Already have an account?",
+    "Reset password": "Back to"
+  }
 
-const AuthCard = ({ mode }: AuthCardProps) => {
   return (
     <Card className="w-[350px] bg-card/45">
       <CardHeader>
@@ -21,7 +23,7 @@ const AuthCard = ({ mode }: AuthCardProps) => {
       </CardHeader>
       <CardContent>
         <AuthForm mode={mode} />
-        {mode === "Log in" && (
+        {(mode === "Log in" || mode === "Sign up") && (
           <div className="flex space-x-2 mt-4">
             <Button variant="outline" className="w-full bg-card/45" onClick={() => oauthLogin("google")}>
               <FcGoogle className="w-5 h-5" />
@@ -33,7 +35,7 @@ const AuthCard = ({ mode }: AuthCardProps) => {
         )}
         <div className="mt-4 text-sm text-foreground/60">
           <p>
-            {mode === "Log in" ? "Don't have an account? " : "Already have an account? "}
+            {footerText[mode]}
             <Link className="text-foreground hover:underline ml-2" href={mode === "Log in" ? "/signup" : "/login"}>
               {mode === "Log in" ? "Sign up." : "Log in."}
             </Link>

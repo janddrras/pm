@@ -13,6 +13,10 @@ export const AccessData = z.object({
   password: z.string().min(3, { message: "Must be min 3 characters" }).max(64)
 })
 
+export const NewPasswordResolver = z.object({
+  password: z.string().min(3, { message: "Must be min 3 characters" }).max(64)
+})
+
 export const PasswordGeneratorParams = z.object({
   new_password: z.string().optional(),
   length: z.number().min(8).max(64),
@@ -34,3 +38,5 @@ export type AccessDataInputType = z.infer<typeof AccessData> & { userId: string 
 export type PasswordGeneratorParamsType = z.infer<typeof PasswordGeneratorParams>
 
 export type AccessDataType = z.infer<typeof AccessData>
+
+export type NewPasswordType = z.infer<typeof NewPasswordResolver>

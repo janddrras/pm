@@ -4,13 +4,11 @@ import { tokenVerification } from "@/actions/register"
 import Spinner from "@/components/Spinner"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { redirect, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import AuthMessage from "./AuthMessage"
 
-interface TokenVerificationProps {}
-
-const TokenVerification = ({}: TokenVerificationProps) => {
+const TokenVerification = () => {
   const searchParams = useSearchParams()
   const token = searchParams.get("token")
 
