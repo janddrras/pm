@@ -23,7 +23,7 @@ const AuthCard = ({ mode }: AuthFormProps) => {
       </CardHeader>
       <CardContent>
         <AuthForm mode={mode} />
-        {(mode === "Log in" || mode === "Sign up") && (
+        {/* {(mode === "Log in" || mode === "Sign up") && (
           <div className="flex space-x-2 mt-4">
             <Button variant="outline" className="w-full bg-card/45" onClick={() => oauthLogin("google")}>
               <FcGoogle className="w-5 h-5" />
@@ -32,7 +32,7 @@ const AuthCard = ({ mode }: AuthFormProps) => {
               <FaGithub className="w-5 h-5" />
             </Button>
           </div>
-        )}
+        )} */}
         <div className="mt-4 text-sm text-foreground/60">
           <p>
             {footerText[mode]}
